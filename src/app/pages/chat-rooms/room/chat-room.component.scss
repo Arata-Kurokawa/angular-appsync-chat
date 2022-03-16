@@ -1,0 +1,18 @@
+
+:host {
+  .container {
+    .messages {
+      .message {
+        &:not(:last-child) {
+          margin-bottom: 8px;
+        }
+      }
+    }
+
+    .message-form {
+      display: flex;
+      .message-form__input {}
+      .message-form__button {}
+    }
+  }
+}

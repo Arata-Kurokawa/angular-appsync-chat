@@ -1,0 +1,32 @@
+<div
+  class="container"
+>
+  <div
+    *ngIf="chatRooms$ | async as chatRooms"
+    class="chat-rooms"
+  >
+    <div
+      class="header"
+    >
+      <div class="header__item">ID</div>
+      <div class="header__item">名前</div>
+    </div>
+    <div
+      *ngFor="let chatRoom of chatRooms"
+      class="chat-room"
+    >
+      <div
+        class="chat-room__item"
+      >
+        {{ chatRoom.id }}
+      </div>
+      <div
+        class="chat-room__item"
+      >
+        {{ chatRoom.name }}
+      </div>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

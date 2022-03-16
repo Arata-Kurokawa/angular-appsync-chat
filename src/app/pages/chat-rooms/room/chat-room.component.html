@@ -1,0 +1,22 @@
+<div class="container">
+  <div
+    *ngIf="chatMessages$ | async as chatMessages"
+    class="messages"
+  >
+    <div
+      *ngFor="let message of chatMessages"
+      class="message"
+    >
+      {{ message.message }}
+    </div>
+  </div>
+
+  <div class="message-form">
+    <textarea
+      [formControl]="messageForm"
+    ></textarea>
+    <button
+      (click)="addMessage()"
+    >送信</button>
+  </div>
+</div>
