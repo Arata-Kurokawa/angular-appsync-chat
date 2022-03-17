@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { BehaviorSubject, Subscription } from "rxjs";
-import {FormControl} from "@angular/forms";
+import { FormControl } from "@angular/forms";
 import { APIServer } from '@app/API.server'
 import { ChatMessage } from '@app/models/chat-message'
 
@@ -51,14 +51,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   ) {
   }
 
-
   ngOnInit() {
     this.chatRoomId = Number(this.route.snapshot.params["id"])
 
     this.api.query(GET_CHAT_MESSAGES, { chatRoomId: this.chatRoomId })
       .then(response => {
         this.chatMessages$.next(response.data.chatMessages)
-
         this.subscription.add(
           this.api.subscription(ON_ADD_CHAT_MESSAGE, { chatRoomId: this.chatRoomId })
             .subscribe(response => {
@@ -77,7 +75,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   addMessage() {
     const message = this.messageForm.value
     if (!!message) {
-
       this.api.mutation(
         ADD_CHAT_MESSAGE,
         {
