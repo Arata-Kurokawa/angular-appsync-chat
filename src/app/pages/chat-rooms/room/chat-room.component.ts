@@ -60,9 +60,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
         this.subscription.add(
           this.api.subscription(ON_ADD_CHAT_MESSAGE, { chatRoomId: this.chatRoomId })
             .subscribe(response => {
-              const current = this.chatMessages$.value
-              const added = [...current, response.value.data.onAddChatMessage]
-              this.chatMessages$.next(added)
+              const onAddChatMessage = response?.value?.data?.onAddChatMessage
+              if (onAddChatMessage) {
+                const current = this.chatMessages$.value
+                const added = [...current, response.value.data.onAddChatMessage]
+                this.chatMessages$.next(added)
+              }
             })
         )
       })
