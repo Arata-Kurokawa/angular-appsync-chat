@@ -54,21 +54,35 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.chatRoomId = Number(this.route.snapshot.params["id"])
 
-    this.api.query(GET_CHAT_MESSAGES, { chatRoomId: this.chatRoomId })
-      .then(response => {
-        this.chatMessages$.next(response.data.chatMessages)
-        this.subscription.add(
-          this.api.subscription(ON_ADD_CHAT_MESSAGE, { chatRoomId: this.chatRoomId })
-            .subscribe(response => {
-              const onAddChatMessage = response?.value?.data?.onAddChatMessage
-              if (onAddChatMessage) {
-                const current = this.chatMessages$.value
-                const added = [...current, response.value.data.onAddChatMessage]
-                this.chatMessages$.next(added)
-              }
-            })
-        )
-      })
+    // online
+    // this.api.query(GET_CHAT_MESSAGES, { chatRoomId: this.chatRoomId })
+    //   .then(response => {
+    //     this.chatMessages$.next(response.data.chatMessages)
+    //     this.subscription.add(
+    //       this.api.subscription(ON_ADD_CHAT_MESSAGE, { chatRoomId: this.chatRoomId })
+    //         .subscribe(response => {
+    //           const onAddChatMessage = response?.value?.data?.onAddChatMessage
+    //           if (onAddChatMessage) {
+    //             const current = this.chatMessages$.value
+    //             const added = [...current, response.value.data.onAddChatMessage]
+    //             this.chatMessages$.next(added)
+    //           }
+    //         })
+    //     )
+    //   })
+
+    // offline
+    this.subscription.add(
+      this.api.subscription(ON_ADD_CHAT_MESSAGE, { chatRoomId: this.chatRoomId })
+        .subscribe(response => {
+          const onAddChatMessage = response?.value?.data?.onAddChatMessage
+          if (onAddChatMessage) {
+            const current = this.chatMessages$.value
+            const added = [...current, response.value.data.onAddChatMessage]
+            this.chatMessages$.next(added)
+          }
+        })
+    )
   }
 
   ngOnDestroy() {
