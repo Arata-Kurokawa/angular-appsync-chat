@@ -2,6 +2,7 @@
 :host {
   .container {
     display: flex;
+    gap: 16px;
 
     .chat-rooms {
       width:   300px;
@@ -19,6 +20,8 @@
 
         &__item {
           display: table-cell;
+          font-weight: bold;
+          padding-left: 4px;
 
           &:not(:last-child) {
             border-right: black solid 1px;
@@ -37,6 +40,7 @@
 
         &__item {
           display: table-cell;
+          padding-left: 4px;
 
           &:not(:last-child) {
             border-right: black solid 1px;
@@ -44,7 +48,9 @@
         }
       }
     }
+
+    .chat-messages {
+
+    }
   }
-
-
 }

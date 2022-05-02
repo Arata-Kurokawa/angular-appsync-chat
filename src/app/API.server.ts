@@ -1,5 +1,6 @@
 import { Injectable }        from '@angular/core'
-import { Observable }        from 'zen-observable-ts'
+import { Observable as ZenObservable } from 'zen-observable-ts'
+import { Observable }        from 'rxjs'
 import { API }               from 'aws-amplify'
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api-graphql/src/types/index'
 
@@ -42,6 +43,22 @@ export class APIServer {
     const mode = authMode ?? 'AWS_LAMBDA'
     const token = authToken ?? 'Authorized'
 
-    return (API.graphql({ query: statement, variables: _arguments, authMode: mode, authToken: token}) as Observable<any>)
+    return new Observable(subscribe => {
+      const observable = (API.graphql({ query: statement, variables: _arguments, authMode: mode, authToken: token}) as ZenObservable<any>)
+
+      const subscription = observable.subscribe(
+        response => {
+          subscribe.next(response)
+        },
+        error => {
+          subscribe.error(error)
+        },
+        () => {
+          subscribe.complete()
+        }
+      )
+
+      subscribe.add(subscription)
+    })
   }
 }
