@@ -1,18 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { from, Observable, of } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable, of } from 'rxjs'
 import { ChatRoom } from '@app/models/chat-room'
 
 import { APIServer } from '@app/API.server'
 import { Router } from '@angular/router'
-
-const GET_CHAT_ROOMS =
-  `query GetChatRooms {
-    chatRooms {
-      id
-      name
-    }
-  }`
 
 @Component({
   templateUrl: './chat-rooms.component.html',
@@ -28,10 +19,6 @@ export class ChatRoomsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // online
-    // this.chatRooms$ = from(this.api.query(GET_CHAT_ROOMS)).pipe(map(response => response.data.chatRooms))
-
-    // offline
     this.chatRooms$ = of([
       { id: 1, name: "room1" },
       { id: 2, name: "room2" },
